@@ -24,6 +24,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
           // this is important because if you don't put !, it says clerkUser can be undefined and currentUsers cannot be undefined...
           text,
         });
+
+        return roomUsers;
       }}
     >
       <ClientSideSuspense fallback={<Loader />}>{children}</ClientSideSuspense>

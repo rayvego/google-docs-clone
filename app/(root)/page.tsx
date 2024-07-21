@@ -8,6 +8,8 @@ import AddDocumentBtn from "@/components/AddDocumentBtn";
 import { getDocuments } from "@/lib/actions/room.actions";
 import Link from "next/link";
 import { dateConverter } from "@/lib/utils";
+import { DeleteModal } from "@/components/DeleteModal";
+import Notifications from "@/components/Notifications";
 
 const Page = async () => {
   const clerkUser = await currentUser();
@@ -20,7 +22,7 @@ const Page = async () => {
     <main className={"home-container"}>
       <Header className={"sticky top-0 left-0"}>
         <div className={"flex items-center gap-2 lg:gap-4"}>
-          Notifications
+          <Notifications />
           <SignedIn>
             <UserButton />
           </SignedIn>
@@ -31,6 +33,7 @@ const Page = async () => {
         <div className={"document-list-container"}>
           <div className={"document-list-title"}>
             <h3 className="text-28-semibold">All documents</h3>
+            <AddDocumentBtn userId={clerkUser.id} email={clerkUser.emailAddresses[0].emailAddress} />
           </div>
           <ul className={"document-ul"}>
             {roomDocuments.data.map(({ id, metadata, createdAt }: any) => (
@@ -44,7 +47,7 @@ const Page = async () => {
                     <p className={"text-sm font-light text-blue-100"}>Created about {dateConverter(createdAt)}</p>
                   </div>
                 </Link>
-                {/* TODO: Add a delete button */}
+                <DeleteModal roomId={id} />
               </li>
             ))}
           </ul>
